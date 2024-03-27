@@ -22,12 +22,8 @@ class _LoginPageState extends State<LoginPage> {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: emailController.text, password: passwordController.text);
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        wrongauthmessage();
-      } else if (e.code == 'wrong-password') {
-        wrongauthmessage();
-      }
+    } on Exception catch (e) {
+      wrongauthmessage();
     }
   }
 
@@ -52,10 +48,11 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 // logo
-                const ImageIcon(
-                  AssetImage('lib/images/calculator_icon.png'),
-                  color: Colors.black,
-                  size: 100,
+                Image(
+                  image: new AssetImage("lib/images/calculator_icon.png"),
+                  color: null,
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.center,
                 ),
 
                 const SizedBox(
