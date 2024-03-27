@@ -53,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 // logo
                 const ImageIcon(
-                  AssetImage('lib/images/calculator_icon.jpeg'),
+                  AssetImage('lib/images/calculator_icon.png'),
                   color: Colors.black,
                   size: 100,
                 ),

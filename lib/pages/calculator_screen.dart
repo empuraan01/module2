@@ -29,23 +29,31 @@ class _HistoryState extends State<History> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(actions: [ElevatedButton(onPressed: (){
-        Navigator.pop(context);
-      }, child: const Text('Go back'))]),
+      appBar: AppBar(actions: [
+        ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text('Go back'))
+      ]),
       body: ListView.builder(
         itemCount: _calculations.length,
         itemBuilder: (context, index) {
           return ListTile(
-            title: Text('Calculation ${index + 1}',style: const TextStyle(color: Colors.white),),
+            title: Text(
+              'Calculation ${index + 1}',
+              style: const TextStyle(color: Colors.white),
+            ),
             subtitle: Text(
-                '${_calculations[index]['calculationData']['currentValue']} + ${_calculations[index]['calculationData']['storedValue']} = ${_calculations[index]['calculationData']['currentValue'] + _calculations[index]['calculationData']['storedValue']}',style: const TextStyle(color: Colors.white),),
+              '${_calculations[index]['calculationData']['currentValue']} + ${_calculations[index]['calculationData']['storedValue']} = ${_calculations[index]['calculationData']['currentValue'] + _calculations[index]['calculationData']['storedValue']}',
+              style: const TextStyle(color: Colors.white),
+            ),
           );
         },
       ),
     );
   }
 }
-
 
 class CalculatorApp extends StatelessWidget {
   const CalculatorApp({super.key});
@@ -65,7 +73,7 @@ class CalculatorApp extends StatelessWidget {
           bodyMedium: TextStyle(color: Colors.white),
         ),
       ),
-      home: CalculatorScreen(),
+      home: const CalculatorScreen(),
     );
   }
 }
@@ -90,17 +98,20 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
   double currentValue = 0;
   double storedValue = 0;
 
-
   void _onButtonPressed(String buttonText) {
     setState(() {
       if (buttonText == 'C') {
         _input = '';
         _output = '0';
-
       } else if (buttonText == '=') {
         _output = _input.interpret().toString();
-        final calculationData = {'currentValue': _input, 'storedValue': _output};
-        _firestore.collection('calculationHistory').add({'calculationData': calculationData});
+        final calculationData = {
+          'currentValue': _input,
+          'storedValue': _output
+        };
+        _firestore
+            .collection('calculationHistory')
+            .add({'calculationData': calculationData});
       } else {
         _input += buttonText;
       }
@@ -113,10 +124,15 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
       appBar: AppBar(
         actions: [
           IconButton(onPressed: signOut, icon: const Icon(Icons.logout)),
-        ElevatedButton(onPressed: (){Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const History()),
-            );}, child: const Text('View history'))],
+          ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const History()),
+                );
+              },
+              child: const Text('View history'))
+        ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -186,9 +202,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
 }
 
 class History extends StatefulWidget {
-
   const History({super.key});
   @override
   _HistoryState createState() => _HistoryState();
 }
-
