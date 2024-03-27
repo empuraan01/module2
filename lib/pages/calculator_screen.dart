@@ -16,7 +16,7 @@ class _HistoryState extends State<History> {
     super.initState();
     _firestore
         .collection('calculationHistory')
-        .orderBy('timestamp')
+        //.orderBy('timestamp')
         .limit(10)
         .get()
         .then((querySnapshot) {
@@ -45,7 +45,7 @@ class _HistoryState extends State<History> {
               style: const TextStyle(color: Colors.white),
             ),
             subtitle: Text(
-              '${_calculations[index]['calculationData']['currentValue']} + ${_calculations[index]['calculationData']['storedValue']} = ${_calculations[index]['calculationData']['currentValue'] + _calculations[index]['calculationData']['storedValue']}',
+              '${_calculations[index]['calculationData']['currentValue']} = ${_calculations[index]['calculationData']['storedValue']}',
               style: const TextStyle(color: Colors.white),
             ),
           );
@@ -97,6 +97,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   double currentValue = 0;
   double storedValue = 0;
+  final Timestamp timestamp = Timestamp.now();
 
   void _onButtonPressed(String buttonText) {
     setState(() {
@@ -106,6 +107,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
       } else if (buttonText == '=') {
         _output = _input.interpret().toString();
         final calculationData = {
+          'timestamp': timestamp,
           'currentValue': _input,
           'storedValue': _output
         };
