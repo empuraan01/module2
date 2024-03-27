@@ -36,7 +36,7 @@ class _HistoryState extends State<History> {
         itemCount: _calculations.length,
         itemBuilder: (context, index) {
           return ListTile(
-            title: Text('Calculation ${index + 1}'),
+            title: Text('Calculation ${index + 1}',style: const TextStyle(color: Colors.white),),
             subtitle: Text(
                 '${_calculations[index]['calculationData']['currentValue']} + ${_calculations[index]['calculationData']['storedValue']} = ${_calculations[index]['calculationData']['currentValue'] + _calculations[index]['calculationData']['storedValue']}',style: const TextStyle(color: Colors.white),),
           );
